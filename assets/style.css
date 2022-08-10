@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@100;200;400;700&display=swap');
+
+body {
+    background: url(../assets/mountain.jpg) no-repeat fixed center;
+    /* background-size: cover; */
+    background-color: rgb(15, 17, 23);
+    height: 95vh;
+    /* overflow: hidden; */
+    font-family: 'Rajdhani';
+    background-repeat: no-repeat;
+}
+
+.container {
+    padding: 20px 70px;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: 10px;
+}
+
+.wrapper > div {
+    color: whitesmoke;
+    padding: 1em;
+}
+
+
+
+#box1 {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    height: 500px;
+    border: 1px solid white;
+}
+
+#search-area {
+
+}
+
+
+#box2 {
+    display: grid;
+    grid-template-rows: 1.5fr 2fr;
+    border: 1px solid white;
+}
+
+
+#five-day-forecast {
+    margin-top: 20px;
+    border: 1px solid white;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+.current-weather {
+    width: 150px;
+    height: 260px;
+    font-size: 14px;
+    padding: 10px;
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
+    /* background-color: white; */
+    background: rgba(100, 114, 101, 0.3);
+    backdrop-filter: blur(3px);
+    margin-left: 20px;
+}
+
+#uv-index {
+    border: 1px solid white;
+    border-radius: 3px;
+    width: 30px;
+    text-align: center;
+}
+
+.place-container {
+    border: 1px solid white;
+    border-radius: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#search-city-btn {
+    background-color: rgb(52, 104, 68);
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 12px;
+}
+
+#icon {
+    width: 50px;
+    margin-bottom: 10px;
+}
+
+/* Adds colorcoding to #uv-index based on UV value, favorable is green, moderate is orange, and severe is red */
+
+#favorable {
+    background-color: green;
+}
+
+#moderate {
+    background-color: orange;
+}
+
+#severe {
+    background-color: red;
+}
+
+.current-weather .time {
+    font-size: 20px;
+    text-align: center;
+}
+
+/* #future-forecast-container {
+    display: flex;
+    justify-content: center;
+    width: 800px;
+} */
+
+.five-day-forecast {
+    width: 100px;
+    height: 150px;
+    font-size: 11px;
+    padding: 10px;
+    border: 2px solid whitesmoke;
+    border-radius: 15px;
+    /* background-color: white; */
+    background: rgba(100, 114, 101, 0.3);
+    backdrop-filter: blur(3px);
+    margin: 15px;
+    display: inline-block;
+    line-height: 0.5;
+}
