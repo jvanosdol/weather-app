@@ -6,6 +6,10 @@ const currentTemp = document.getElementById('current-temp')
 const windSpeed = document.getElementById('current-wind')
 const humidity = document.getElementById('current-humidity')
 const uvIndex = document.getElementById('current-uv')
+const pressure = document.getElementById('current-pressure')
+
+const searchBtn = document.getElementById('search-city-btn')
+let searchBar = document.getElementById('search-bar')
 
 const currentWeatherBoxes = document.getElementById('current-weather')
 
@@ -16,8 +20,8 @@ const futureWeather = document.querySelector('#future-forecast-container')
 
 
 
+let city = 'Seattle'
 
-let pressure = document.getElementById('pressure')
 // humidity, windspeed, temp, air pressure, uv, weather conditions icon,
 
 let currentContainer = document.querySelector('#current-info')
@@ -57,8 +61,10 @@ let dataInfo = '';
 
 API_KEY = '2352a25d575ebbf6899d8d3dacb6b8cf';
 
-function getLatAndLon() {
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=seattle&appid=${API_KEY}`)
+
+
+function getLatAndLon(city) {
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}`)
     .then(res => res.json())
 
     .then(data => {
@@ -68,14 +74,10 @@ function getLatAndLon() {
         console.log('seattle lat: ' + latitude)
         console.log('seattle lon: ' + longitude)
         generateWeatherData(latitude, longitude)
-    })
-
-    
-
-    
+    }) 
 }
 
-getLatAndLon();
+//getLatAndLon(city);
 
 function generateWeatherData(latitude, longitude) {
     navigator.geolocation.getCurrentPosition((success) => {
@@ -101,8 +103,9 @@ function generateWeatherData(latitude, longitude) {
             // console.log(data.current.wind_speed)
             // console.log(data.current.uvi)
             //displayFutureWeatherData(data);
-            //displayWeatherData(data);
-            //displayCurrentWeatherData(data)
+            displayWeatherData(data);
+            displayCurrentWeatherData(data)
+            console.log('THIS IS THE LOCATION SPECIFIC DATA')
         })
     })
 }
@@ -110,9 +113,11 @@ function generateWeatherData(latitude, longitude) {
 
 function displayCurrentWeatherData(data) {
 
-    humidity.innerHTML = data.list[0].main.humidity;
-    windSpeed.innerHTML = data.list[0].wind.speed;
-    uvIndex.innerHTML = data.list[0].weather.uvi;
+    currentCity.innerHTML = city;
+    currentTemp.innerHTML = data.current.temp;
+    humidity.innerHTML = data.current.humidity;
+    windSpeed.innerHTML = data.current.wind_speed;
+    uvIndex.innerHTML = data.current.uvi;
     pressure.innerHTML = data.current.pressure;
 
     //console.log(humidity, windSpeed, uvi)
@@ -177,16 +182,23 @@ function displayWeatherData (data) {
 
 
     for ( let i = 1; i < 6; i++) {
+
+        let tempMin = Math.floor(((data.daily[i].temp.min-273.15)*1.8)+32);
+        let tempMax = Math.floor(((data.daily[i].temp.max-273.15)*1.8)+32);
+
+        let date = data.daily[i].dt;
+
         var subContainerTemplate = `
         <div class="five-day-forecast">
             <div id="5-days-out">
                 <div class="current-day"></div>
                 <div class="temp"></div>
                 <p></p>
-                <p><img id='icon' src='http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png'></p>
-                <p>Weather: ${data.list[i].weather[0].main}</p>
-                <p>Wind Speed: ${data.list[i].wind.speed}</p>
-                <p>Temp: ${data.list[i].main.temp}</p>
+                <p>${date}</p>
+                <p><img id='icon' src='http://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png'></p>
+                <p>Weather: ${data.daily[i].weather[0].main}</p>
+                <p>Wind Speed: ${data.daily[i].wind_speed}</p>
+                <p>Temp: ${tempMin}*-${tempMax}*</p>
             </div>
         </div>
         ` 
@@ -215,3 +227,15 @@ console.log(subContainerTemplate)
 
 
 // futureWeather.innerHTML = subContainerTemplate
+
+let searchHistory = [];
+let cityHistory = '';
+
+
+searchBtn.addEventListener('click', () => {
+    city = searchBar.value;
+    nextFiveDays.innerHTML = '';
+    getLatAndLon(city);
+    localStorage.setItem(cityHistory, city.innerHTML)
+    searchBar.value = '';
+})
