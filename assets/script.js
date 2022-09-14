@@ -1,5 +1,4 @@
-const currentTime = document.getElementById('time')
-const currentDate = document.getElementById('date')
+const currentDate = document.getElementById('current-date')
 
 const currentCity = document.getElementById('current-city')
 const currentTemp = document.getElementById('current-temp')
@@ -26,14 +25,9 @@ let city = 'Seattle'
 
 let currentContainer = document.querySelector('#current-info')
 
- const time = new Date();
- const dates = time.getDate();
- //const month = time.getMonth();
- const day = time.getDay();
- const hour = time.getHours();
- const hrs24Format = hour >= 13 ? hour %12: hour;
-// const minutes = time.getMinutes();
 
+let m = moment();
+$("#current-day").text(m.format( "MMM Do, YYYY"));
 
 // function formatAMPM(date) {
 //     var hours = date.getHours();
@@ -49,8 +43,6 @@ let currentContainer = document.querySelector('#current-info')
   
 //   console.log(formatAMPM(new Date));
 
-  console.log(dates)
-  console.log(time)
 
 //const ampm = hours >= 12 ? 'PM' : 'AM';
 
@@ -114,7 +106,10 @@ function generateWeatherData(latitude, longitude) {
 function displayCurrentWeatherData(data) {
 
     currentCity.innerHTML = city;
-    currentTemp.innerHTML = data.current.temp;
+    currentTemp.innerHTML = Math.floor(((data.current.temp-273.15)*1.8)+32) + '*';
+    //currentTemp.innerHTML = data.current.temp;
+    
+
     humidity.innerHTML = data.current.humidity;
     windSpeed.innerHTML = data.current.wind_speed;
     uvIndex.innerHTML = data.current.uvi;
@@ -186,7 +181,18 @@ function displayWeatherData (data) {
         let tempMin = Math.floor(((data.daily[i].temp.min-273.15)*1.8)+32);
         let tempMax = Math.floor(((data.daily[i].temp.max-273.15)*1.8)+32);
 
+        //let tempCurrent = Math.floor(((data.daily.temp.max)))
+
         let date = data.daily[i].dt;
+        let a = new Date(date * 1000)
+        let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        let month = months[a.getMonth()];
+        let dates = a.getDate();
+
+        
+        //let day = date.toString();
+
 
         var subContainerTemplate = `
         <div class="five-day-forecast">
@@ -194,7 +200,7 @@ function displayWeatherData (data) {
                 <div class="current-day"></div>
                 <div class="temp"></div>
                 <p></p>
-                <p>${date}</p>
+                <p>${month}<span> </span>${dates}</p>
                 <p><img id='icon' src='http://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png'></p>
                 <p>Weather: ${data.daily[i].weather[0].main}</p>
                 <p>Wind Speed: ${data.daily[i].wind_speed}</p>
@@ -203,20 +209,13 @@ function displayWeatherData (data) {
         </div>
         ` 
 
+        //console.log(day)
+
 
        //futureWeather.innerHTML += subContainerTemplate;
        nextFiveDays.innerHTML += subContainerTemplate;
     }
 
-    
-
-
-
-
-        
-
-
-    
 console.log(subContainerTemplate)
 
 }

@@ -35,24 +35,24 @@ body {
     display: grid;
     grid-template-rows: 1fr 4fr;
     height: 500px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
 }
 
-#search-area {
+/* #search-area {
 
-}
+} */
 
 
 #box2 {
     display: grid;
     grid-template-rows: 1.5fr 2fr;
-    border: 1px solid white;
+    /* border: 1px solid white; */
 }
 
 
 #five-day-forecast {
     margin-top: 20px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     display: flex;
     justify-content: space-between;
 }
