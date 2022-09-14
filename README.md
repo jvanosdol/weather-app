@@ -6,7 +6,7 @@ James Van Osdol
 
 ## Description
 
-*^*^*  This project is not complete, I have not been able to display the high scores yet, however, this should hopefully satisfy all of the other requirements.  *^*^*
+*** This project is still missing the ability to save and then display recent searches 
 
 The purpose of the project is to create a weather app that displays current and future weather conditions for a user specified location.
 
